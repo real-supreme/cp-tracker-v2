@@ -1,0 +1,1 @@
+make up   # uses CockroachDB Cloud via DATABASE_URL in .env

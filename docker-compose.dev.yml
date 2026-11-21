@@ -1,0 +1,18 @@
+# Copyright 2022–2025 Emmanuel Smiju (real-supreme)
+# SPDX-License-Identifier: AGPL-3.0-only
+#
+# Local dev stack: hot-reload app only. DATABASE_URL in .env decides the DB.
+services:
+  app:
+    build: .
+    env_file: .env
+    environment:
+      CONFIG_PATH: /app/config/config.yaml
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./config/config.yaml:/app/config/config.yaml:ro
+      - ./certs/root.crt:/app/root.crt:ro 
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
